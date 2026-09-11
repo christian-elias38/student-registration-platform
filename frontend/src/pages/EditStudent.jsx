@@ -1,46 +1,86 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import StudentForm from "../components/StudentForm";
 import { getStudent, updateStudent } from "../services/api";
+import { useToast } from "../context/ToastContext";
+import { ArrowLeft } from "lucide-react";
 
 function EditStudent() {
   const { id } = useParams();
   const navigate = useNavigate();
+  const { addToast } = useToast();
+
   const [student, setStudent] = useState(null);
-  const [message, setMessage] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     getStudent(id)
       .then((res) => setStudent(res.data))
-      .catch(() => setStudent(null))
+      .catch(() => {
+        addToast("Student not found", "error");
+        setStudent(null);
+      })
       .finally(() => setLoading(false));
-  }, [id]);
+  }, [id, addToast]);
 
   const handleSubmit = async (formData) => {
     try {
       await updateStudent(id, formData);
-      setMessage({ type: "success", text: "Student updated successfully!" });
-      setTimeout(() => navigate(`/students/${id}`), 1000);
+      addToast("Student information updated successfully!", "success");
+      setTimeout(() => navigate(`/students/${id}`), 800);
     } catch (err) {
-      setMessage({ type: "error", text: err.response?.data?.message || "Something went wrong" });
+      addToast(err.response?.data?.message || "Failed to update student", "error");
     }
   };
 
-  if (loading) return <p className="muted">Loading...</p>;
-  if (!student) return <p className="muted">Student not found.</p>;
+  if (loading) {
+    return (
+      <div style={{ textAlign: "center", padding: "60px 0", color: "var(--text-muted)" }}>
+        Loading student record...
+      </div>
+    );
+  }
+
+  if (!student) {
+    return (
+      <div className="card" style={{ textAlign: "center", padding: 40 }}>
+        <h3>Student Not Found</h3>
+        <p style={{ color: "var(--text-muted)", marginTop: 8 }}>
+          The requested student record does not exist.
+        </p>
+        <button className="btn btn-secondary" onClick={() => navigate("/students")} style={{ marginTop: 16 }}>
+          Return to Student Directory
+        </button>
+      </div>
+    );
+  }
 
   return (
-    <div>
+    <div style={{ maxWidth: 840, margin: "0 auto" }}>
       <div className="page-header">
-        <h1>Edit Student</h1>
-        <p className="page-subtitle">Update details for {student.full_name}</p>
+        <div>
+          <button
+            className="btn btn-secondary btn-sm"
+            onClick={() => navigate(`/students/${id}`)}
+            style={{ marginBottom: 12 }}
+          >
+            <ArrowLeft style={{ width: 14, height: 14 }} />
+            <span>Back to Profile</span>
+          </button>
+          <div className="page-title-group">
+            <h1>Edit Student Profile</h1>
+            <p className="page-subtitle">Update information for {student.full_name}</p>
+          </div>
+        </div>
       </div>
 
-      {message && <div className={`alert alert-${message.type}`}>{message.text}</div>}
-
       <div className="card">
-        <StudentForm initialData={student} onSubmit={handleSubmit} submitLabel="Update Student" />
+        <StudentForm
+          initialData={student}
+          onSubmit={handleSubmit}
+          submitLabel="Update Student Record"
+          isEditMode={true}
+        />
       </div>
     </div>
   );

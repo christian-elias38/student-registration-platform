@@ -24,6 +24,20 @@
   --text-secondary: #5C504D;     /* Warm Medium Muted */
   --text-muted: #8C7F7C;         /* Subtle Muted */
   
+  /* Sidebar Color Theme */
+  --sidebar-bg: #2C1923;         /* Deep Plum Espresso Sidebar */
+  --sidebar-border: rgba(255, 255, 255, 0.08);
+  --sidebar-brand-name: #FAF7F2;
+  --sidebar-brand-tag: #E2886D;
+  --sidebar-text-muted: #9E8C94;
+  --sidebar-text: #D8CDD2;
+  --sidebar-hover: rgba(255, 255, 255, 0.08);
+  --sidebar-active-bg: linear-gradient(135deg, #C86D51, #A8543B);
+  --sidebar-active-text: #FFFFFF;
+  --sidebar-footer-bg: #21121B;
+  --sidebar-user-avatar-bg: #C86D51;
+  --sidebar-user-name: #FAF7F2;
+
   --input-bg: #FFFFFF;
   --input-border: #D8D2C9;
   --hover-row: #FAF7F4;
@@ -74,6 +88,19 @@
   --border: #383034;
   --border-subtle: #2C2629;
   
+  --sidebar-bg: #1A1216;
+  --sidebar-border: #2E2228;
+  --sidebar-brand-name: #F5EFEB;
+  --sidebar-brand-tag: #E2886D;
+  --sidebar-text-muted: #8E7E85;
+  --sidebar-text: #C8BDC2;
+  --sidebar-hover: rgba(255, 255, 255, 0.06);
+  --sidebar-active-bg: linear-gradient(135deg, #C86D51, #B55C41);
+  --sidebar-active-text: #FFFFFF;
+  --sidebar-footer-bg: #150E12;
+  --sidebar-user-avatar-bg: #C86D51;
+  --sidebar-user-name: #F5EFEB;
+
   --text-primary: #F5EFEB;
   --text-secondary: #C4B9B5;
   --text-muted: #8E827E;
@@ -116,8 +143,8 @@ body {
 /* Sidebar */
 .sidebar {
   width: 260px;
-  background: var(--surface);
-  border-right: 1px solid var(--border);
+  background: var(--sidebar-bg);
+  border-right: 1px solid var(--sidebar-border);
   display: flex;
   flex-direction: column;
   flex-shrink: 0;
@@ -127,6 +154,7 @@ body {
   left: 0;
   z-index: 30;
   transition: transform 0.25s ease;
+  box-shadow: 2px 0 16px rgba(0, 0, 0, 0.15);
 }
 
 .sidebar-header {
@@ -134,38 +162,34 @@ body {
   display: flex;
   align-items: center;
   gap: 12px;
-  border-bottom: 1px solid var(--border-subtle);
+  border-bottom: 1px solid var(--sidebar-border);
 }
 
 .brand-badge {
   width: 40px;
   height: 40px;
-  background: var(--primary);
+  background: var(--terracotta);
   color: #FFFFFF;
   border-radius: var(--radius-md);
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: var(--shadow-sm);
-}
-
-[data-theme="dark"] .brand-badge {
-  color: #1E1A1C;
+  box-shadow: 0 2px 8px rgba(200, 109, 81, 0.3);
 }
 
 .brand-name {
   font-size: 17px;
   font-weight: 800;
-  color: var(--text-primary);
+  color: var(--sidebar-brand-name);
   letter-spacing: -0.3px;
 }
 
 .brand-tag {
   font-size: 11px;
-  font-weight: 600;
-  color: var(--terracotta);
+  font-weight: 700;
+  color: var(--sidebar-brand-tag);
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.6px;
 }
 
 .sidebar-nav {
@@ -180,7 +204,7 @@ body {
 .nav-section-title {
   font-size: 11px;
   font-weight: 700;
-  color: var(--text-muted);
+  color: var(--sidebar-text-muted);
   text-transform: uppercase;
   letter-spacing: 0.6px;
   padding: 12px 12px 6px 12px;
@@ -193,7 +217,7 @@ body {
   gap: 12px;
   padding: 10px 14px;
   border-radius: var(--radius-md);
-  color: var(--text-secondary);
+  color: var(--sidebar-text);
   text-decoration: none;
   font-weight: 600;
   font-size: 13.5px;
@@ -201,19 +225,15 @@ body {
 }
 
 .nav-item:hover {
-  background: var(--surface-alt);
-  color: var(--text-primary);
+  background: var(--sidebar-hover);
+  color: #FFFFFF;
 }
 
 .nav-item.active {
-  background: var(--primary-light);
-  color: var(--primary);
+  background: var(--sidebar-active-bg);
+  color: var(--sidebar-active-text);
   font-weight: 700;
-}
-
-[data-theme="dark"] .nav-item.active {
-  color: var(--primary);
-  background: var(--primary-subtle);
+  box-shadow: 0 4px 12px rgba(200, 109, 81, 0.3);
 }
 
 .nav-item .nav-icon {
@@ -223,12 +243,12 @@ body {
 }
 
 .sidebar-footer {
-  padding: 16px;
-  border-top: 1px solid var(--border-subtle);
+  padding: 16px 20px;
+  border-top: 1px solid var(--sidebar-border);
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: var(--surface);
+  background: var(--sidebar-footer-bg);
 }
 
 .user-pill {
@@ -241,21 +261,26 @@ body {
   width: 34px;
   height: 34px;
   border-radius: 50%;
-  background: var(--terracotta-light);
-  color: var(--terracotta);
+  background: var(--sidebar-user-avatar-bg);
+  color: #FFFFFF;
   display: flex;
   align-items: center;
   justify-content: center;
   font-weight: 700;
   font-size: 13px;
-  border: 1px solid var(--border);
+  border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .user-info h4 {
   font-size: 13px;
   font-weight: 700;
-  color: var(--text-primary);
+  color: var(--sidebar-user-name);
   line-height: 1.2;
+}
+
+.user-info p {
+  font-size: 11px;
+  color: var(--sidebar-text-muted);
 }
 
 .user-info p {

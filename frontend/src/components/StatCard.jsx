@@ -5,6 +5,8 @@ function StatCard({
   label,
   value,
   icon: Icon,
+  cardBg = "var(--surface)",
+  cardBorder = "var(--border)",
   iconBg = "var(--primary-light)",
   iconColor = "var(--primary)",
   trendText,
@@ -12,7 +14,13 @@ function StatCard({
   subtext,
 }) {
   return (
-    <div className="stat-card">
+    <div
+      className="stat-card"
+      style={{
+        background: cardBg,
+        borderColor: cardBorder,
+      }}
+    >
       <div className="stat-info">
         <span className="stat-label">{label}</span>
         <span className="stat-value">{value}</span>
@@ -20,7 +28,7 @@ function StatCard({
           <div
             className="stat-badge"
             style={{
-              background: trendPositive ? "var(--sage-light)" : "var(--terracotta-light)",
+              background: trendPositive ? "rgba(94, 122, 100, 0.15)" : "rgba(200, 109, 81, 0.15)",
               color: trendPositive ? "var(--sage)" : "var(--terracotta)",
             }}
           >

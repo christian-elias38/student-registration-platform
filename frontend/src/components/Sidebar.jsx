@@ -33,7 +33,7 @@ function Sidebar({ isOpen, onClose }) {
         </div>
         <div style={{ flex: 1 }}>
           <h2 className="brand-name">StudentReg</h2>
-          <span className="brand-tag">Academic SaaS</span>
+          <span className="brand-tag">Student Platform</span>
         </div>
         <button
           className="mobile-toggle"

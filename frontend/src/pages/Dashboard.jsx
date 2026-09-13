@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import StatCard from "../components/StatCard";
+import { ShadcnAreaChart, ShadcnBarChart, ShadcnYearBarChart } from "../components/ShadcnChart";
 import { getStats, getStudents } from "../services/api";
 import { getInitials, getAvatarColor, formatDate } from "../utils/format";
 import {
@@ -22,7 +23,6 @@ function Dashboard() {
   const [stats, setStats] = useState({ total: 0, departments: 0, recent: [] });
   const [allStudents, setAllStudents] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [activePoint, setActivePoint] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -69,8 +69,6 @@ function Dashboard() {
     color: dept.color,
   }));
 
-  const maxBarVal = Math.max(...realDepartmentData.map((d) => d.count), 1);
-
   // Real Year Level Breakdown from allStudents dataset
   const yearCounts = allStudents.reduce((acc, s) => {
     const year = s.year || "1st Year";
@@ -93,7 +91,6 @@ function Dashboard() {
 
   // Real Realistic Enrollment Growth Area Chart based on student registration timestamps
   const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun"];
-  const currentMonthIdx = new Date().getMonth();
   
   // Calculate monthly intake from real registration timestamps
   const monthlyIntake = [0, 0, 0, 0, 0, 0];
@@ -110,7 +107,6 @@ function Dashboard() {
   // Calculate cumulative trend starting from initial baseline up to current student total
   let runningTotal = Math.max(stats.total - allStudents.length, 0);
   const trendData = monthNames.map((month, idx) => {
-    // Distribute intake realistically across the 6-month timeline
     const monthIntake = monthlyIntake[idx] || (idx === 5 ? allStudents.length : Math.round((allStudents.length + 5) * ((idx + 1) / 6)));
     runningTotal = Math.max(runningTotal, monthIntake);
     return {
@@ -118,28 +114,6 @@ function Dashboard() {
       count: runningTotal,
     };
   });
-
-  const maxVal = Math.max(...trendData.map((d) => d.count), 10);
-
-  // SVG Area Chart points
-  const points = trendData.map((pt, idx) => {
-    const x = 40 + idx * 88;
-    const y = 140 - (pt.count / maxVal) * 110;
-    return { ...pt, x, y };
-  });
-
-  const areaPath = `
-    M ${points[0].x} 140 
-    L ${points[0].x} ${points[0].y} 
-    ${points.slice(1).map((p) => `L ${p.x} ${p.y}`).join(" ")} 
-    L ${points[points.length - 1].x} 140 
-    Z
-  `;
-
-  const linePath = `
-    M ${points[0].x} ${points[0].y} 
-    ${points.slice(1).map((p) => `L ${p.x} ${p.y}`).join(" ")}
-  `;
 
   return (
     <div>
@@ -164,16 +138,15 @@ function Dashboard() {
         </div>
       </div>
 
-      {/* Metric Cards Grid with Colorful Card Backgrounds & Icons */}
+      {/* Metric Cards Grid with High Visibility Colors */}
       <div className="stats-grid">
         <StatCard
           label="Total Registered Students"
           value={loading ? "…" : stats.total}
           icon={Users}
-          cardBg="#F5EFEB"
-          cardBorder="#E6D7D0"
-          iconBg="var(--primary)"
-          iconColor="#FFFFFF"
+          accentColor="var(--primary)"
+          iconBg="var(--primary-light)"
+          iconColor="var(--primary)"
           trendText="+12.4% this term"
           trendPositive={true}
         />
@@ -181,20 +154,18 @@ function Dashboard() {
           label="Active Departments"
           value={loading ? "…" : stats.departments || 5}
           icon={Building2}
-          cardBg="#FDF2EE"
-          cardBorder="#F6D9D0"
-          iconBg="var(--terracotta)"
-          iconColor="#FFFFFF"
+          accentColor="var(--terracotta)"
+          iconBg="var(--terracotta-light)"
+          iconColor="var(--terracotta)"
           subtext="Full capacity programs"
         />
         <StatCard
           label="Offered Courses"
           value="48"
           icon={BookOpen}
-          cardBg="#FDF6ED"
-          cardBorder="#F7E6D0"
-          iconBg="var(--amber)"
-          iconColor="#FFFFFF"
+          accentColor="var(--amber)"
+          iconBg="var(--amber-light)"
+          iconColor="var(--amber)"
           trendText="12 courses active"
           trendPositive={true}
         />
@@ -202,10 +173,9 @@ function Dashboard() {
           label="New Registrations"
           value={loading ? "…" : newThisMonth}
           icon={UserPlus}
-          cardBg="#EFF4F0"
-          cardBorder="#D3E2D6"
-          iconBg="var(--sage)"
-          iconColor="#FFFFFF"
+          accentColor="var(--sage)"
+          iconBg="var(--sage-light)"
+          iconColor="var(--sage)"
           trendText={newThisMonth > 0 ? "Active influx" : "No new intake"}
           trendPositive={newThisMonth > 0}
         />
@@ -267,201 +237,55 @@ function Dashboard() {
         </div>
       </div>
 
-      {/* CHARTS ROW 1: REAL DYNAMIC AREA CHART & DEPARTMENT BAR CHART */}
+      {/* CHARTS ROW 1: REAL SHADCN AREA CHART & DEPARTMENT BAR CHART */}
       <div style={{ display: "grid", gridTemplateColumns: "1.4fr 1fr", gap: 24, marginBottom: 28 }}>
-        {/* REAL AREA CHART: Enrollment Growth Trend */}
+        {/* SHADCN AREA CHART: Enrollment Growth Trend */}
         <div className="card">
           <div className="card-header">
             <div>
               <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                <TrendingUp style={{ width: 18, height: 18, color: "var(--terracotta)" }} />
-                <h3 className="card-title">Enrollment Growth (Real Area Chart)</h3>
+                <TrendingUp style={{ width: 18, height: 18, color: "var(--primary)" }} />
+                <h3 className="card-title">Enrollment Growth Trend</h3>
               </div>
-              <p className="card-subtitle">Cumulative monthly student registrations</p>
+              <p className="card-subtitle">Cumulative monthly student registrations (Shadcn Area Chart)</p>
             </div>
             <span className="badge badge-plum">2026 Academic Term</span>
           </div>
 
-          <div style={{ position: "relative", padding: "10px 0 0 0" }}>
-            <svg viewBox="0 0 520 180" style={{ width: "100%", height: 180, overflow: "visible" }}>
-              <defs>
-                <linearGradient id="areaGradient" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stopColor="var(--terracotta)" stopOpacity="0.38" />
-                  <stop offset="100%" stopColor="var(--terracotta)" stopOpacity="0.0" />
-                </linearGradient>
-              </defs>
-
-              {/* Horizontal Gridlines */}
-              <line x1="20" y1="30" x2="500" y2="30" stroke="var(--border-subtle)" strokeDasharray="4 4" />
-              <line x1="20" y1="85" x2="500" y2="85" stroke="var(--border-subtle)" strokeDasharray="4 4" />
-              <line x1="20" y1="140" x2="500" y2="140" stroke="var(--border)" strokeWidth="1" />
-
-              {/* Area Fill */}
-              <path d={areaPath} fill="url(#areaGradient)" />
-
-              {/* Area Border Stroke Line */}
-              <path d={linePath} fill="none" stroke="var(--terracotta)" strokeWidth="3" strokeLinecap="round" />
-
-              {/* Interactive Data Points */}
-              {points.map((pt, idx) => (
-                <g
-                  key={pt.month}
-                  onMouseEnter={() => setActivePoint(pt)}
-                  onMouseLeave={() => setActivePoint(null)}
-                  style={{ cursor: "pointer" }}
-                >
-                  <circle
-                    cx={pt.x}
-                    cy={pt.y}
-                    r={activePoint?.month === pt.month ? "7" : "5"}
-                    fill="var(--surface)"
-                    stroke="var(--terracotta)"
-                    strokeWidth="3"
-                    style={{ transition: "all 0.15s ease" }}
-                  />
-                  <text
-                    x={pt.x}
-                    y="160"
-                    textAnchor="middle"
-                    fill="var(--text-muted)"
-                    fontSize="11"
-                    fontWeight="700"
-                  >
-                    {pt.month}
-                  </text>
-                  <text
-                    x={pt.x}
-                    y={pt.y - 10}
-                    textAnchor="middle"
-                    fill="var(--text-primary)"
-                    fontSize="10.5"
-                    fontWeight="800"
-                  >
-                    {pt.count}
-                  </text>
-                </g>
-              ))}
-            </svg>
+          <div style={{ padding: "12px 0 0 0" }}>
+            <ShadcnAreaChart data={trendData} height={200} strokeColor="var(--primary)" gradientColor="var(--primary)" />
           </div>
         </div>
 
-        {/* REAL BAR CHART: Department Enrollment Comparison */}
+        {/* SHADCN BAR CHART: Department Enrollment Comparison */}
         <div className="card">
           <div className="card-header">
             <div>
               <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                <BarChart2 style={{ width: 18, height: 18, color: "var(--primary)" }} />
-                <h3 className="card-title">Department Allocation (Real Bar Graph)</h3>
+                <BarChart2 style={{ width: 18, height: 18, color: "var(--terracotta)" }} />
+                <h3 className="card-title">Department Allocation</h3>
               </div>
-              <p className="card-subtitle">Real student count per academic program</p>
+              <p className="card-subtitle">Student count per program (Shadcn Bar Chart)</p>
             </div>
           </div>
 
-          {/* Vertical Bar Chart */}
-          <div
-            style={{
-              display: "flex",
-              alignItems: "flex-end",
-              justify: "space-between",
-              height: 160,
-              paddingTop: 20,
-              borderBottom: "1px solid var(--border)",
-            }}
-          >
-            {realDepartmentData.map((d) => {
-              const heightPct = Math.max(Math.round((d.count / maxBarVal) * 100), 12);
-              return (
-                <div
-                  key={d.name}
-                  style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                    flex: 1,
-                    gap: 6,
-                    height: "100%",
-                    justifyContent: "flex-end",
-                  }}
-                >
-                  <span style={{ fontSize: 11, fontWeight: 800, color: "var(--text-primary)" }}>
-                    {d.count}
-                  </span>
-                  <div
-                    style={{
-                      width: 28,
-                      height: `${heightPct}%`,
-                      background: d.color,
-                      borderRadius: "6px 6px 0 0",
-                      transition: "height 0.4s ease",
-                    }}
-                    title={`${d.name}: ${d.count} registered students`}
-                  />
-                  <span
-                    style={{
-                      fontSize: 10,
-                      fontWeight: 700,
-                      color: "var(--text-muted)",
-                      textTransform: "uppercase",
-                      marginTop: 4,
-                      whiteSpace: "nowrap",
-                    }}
-                  >
-                    {d.name.split(" ")[0]}
-                  </span>
-                </div>
-              );
-            })}
+          <div style={{ padding: "12px 0 0 0" }}>
+            <ShadcnBarChart data={realDepartmentData} height={200} barColor="var(--terracotta)" />
           </div>
         </div>
       </div>
 
-      {/* CHARTS ROW 2: REAL YEAR LEVEL DISTRIBUTION BARS */}
+      {/* CHARTS ROW 2: SHADCN YEAR LEVEL DISTRIBUTION BARS */}
       <div className="card" style={{ marginBottom: 28 }}>
         <div className="card-header">
           <div>
-            <h3 className="card-title">Year Level Distribution (Real Breakdown)</h3>
-            <p className="card-subtitle">Student enrollment split across 1st Year to 4th Year</p>
+            <h3 className="card-title">Year Level Distribution</h3>
+            <p className="card-subtitle">Student enrollment split across 1st Year to 4th Year (Shadcn Chart)</p>
           </div>
         </div>
 
-        <div className="form-grid" style={{ gap: 16 }}>
-          {yearLevels.map((y) => (
-            <div
-              key={y.label}
-              style={{
-                padding: "14px 16px",
-                background: "var(--surface-alt)",
-                borderRadius: "var(--radius-md)",
-                border: "1px solid var(--border-subtle)",
-              }}
-            >
-              <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 8, fontSize: 13 }}>
-                <span style={{ fontWeight: 700, color: "var(--text-primary)" }}>{y.label}</span>
-                <span style={{ fontWeight: 800, color: y.color }}>
-                  {y.count} Students ({y.percentage}%)
-                </span>
-              </div>
-              <div
-                style={{
-                  height: 10,
-                  width: "100%",
-                  background: "var(--border-subtle)",
-                  borderRadius: 6,
-                  overflow: "hidden",
-                }}
-              >
-                <div
-                  style={{
-                    height: "100%",
-                    width: `${Math.max(y.percentage, 5)}%`,
-                    background: y.color,
-                    borderRadius: 6,
-                    transition: "width 0.5s ease",
-                  }}
-                />
-              </div>
-            </div>
-          ))}
+        <div style={{ padding: "12px 0 0 0" }}>
+          <ShadcnYearBarChart data={yearLevels} height={180} />
         </div>
       </div>
 

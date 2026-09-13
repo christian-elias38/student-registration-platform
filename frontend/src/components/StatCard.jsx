@@ -5,8 +5,7 @@ function StatCard({
   label,
   value,
   icon: Icon,
-  cardBg = "var(--surface)",
-  cardBorder = "var(--border)",
+  accentColor = "var(--primary)",
   iconBg = "var(--primary-light)",
   iconColor = "var(--primary)",
   trendText,
@@ -17,8 +16,9 @@ function StatCard({
     <div
       className="stat-card"
       style={{
-        background: cardBg,
-        borderColor: cardBorder,
+        background: "var(--surface)",
+        borderColor: "var(--border)",
+        borderTop: `3.5px solid ${accentColor}`,
       }}
     >
       <div className="stat-info">
@@ -28,8 +28,9 @@ function StatCard({
           <div
             className="stat-badge"
             style={{
-              background: trendPositive ? "rgba(94, 122, 100, 0.15)" : "rgba(200, 109, 81, 0.15)",
+              background: trendPositive ? "var(--sage-light)" : "var(--terracotta-light)",
               color: trendPositive ? "var(--sage)" : "var(--terracotta)",
+              border: `1px solid ${trendPositive ? "rgba(16, 185, 129, 0.2)" : "rgba(244, 63, 94, 0.2)"}`,
             }}
           >
             {trendPositive ? (
@@ -45,7 +46,14 @@ function StatCard({
         )}
       </div>
 
-      <div className="stat-icon-wrap" style={{ background: iconBg, color: iconColor }}>
+      <div
+        className="stat-icon-wrap"
+        style={{
+          background: iconBg,
+          color: iconColor,
+          boxShadow: `0 2px 8px ${iconColor}25`,
+        }}
+      >
         {typeof Icon === "function" || (typeof Icon === "object" && Icon !== null) ? (
           <Icon style={{ width: 22, height: 22 }} />
         ) : (

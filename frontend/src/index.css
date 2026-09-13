@@ -7,66 +7,69 @@
 }
 
 :root {
-  /* Warm Academic Color System */
-  --primary: #36212B;            /* Deep Plum / Espresso */
-  --primary-hover: #26161E;
-  --primary-light: #F5EFEB;
-  --primary-subtle: #EFE4DD;
+  /* Modern High-Contrast Indigo & Slate Palette */
+  --primary: #4F46E5;            /* Electric Indigo */
+  --primary-hover: #4338CA;
+  --primary-light: #EEF2FF;
+  --primary-subtle: #E0E7FF;
   
-  --bg: #FAF7F2;                 /* Soft Warm Ivory */
+  --bg: #F8FAFC;                 /* Clean Light Slate */
   --surface: #FFFFFF;
-  --surface-alt: #F6F3ED;        /* Warm Stone */
+  --surface-alt: #F1F5F9;        /* Cool Slate Alt */
   
-  --border: #E6E1DA;             /* Soft Warm Gray Border */
-  --border-subtle: #F0EAE2;
+  --border: #E2E8F0;             /* Crisp Slate Border */
+  --border-subtle: #F1F5F9;
   
-  --text-primary: #241E1C;       /* Charcoal Dark Brown */
-  --text-secondary: #5C504D;     /* Warm Medium Muted */
-  --text-muted: #8C7F7C;         /* Subtle Muted */
+  --text-primary: #0F172A;       /* Dark Slate */
+  --text-secondary: #475569;     /* Slate Secondary */
+  --text-muted: #64748B;         /* Muted Slate */
   
-  /* Sidebar Color Theme */
-  --sidebar-bg: #2C1923;         /* Deep Plum Espresso Sidebar */
+  /* Sidebar Color Theme - Slate Midnight */
+  --sidebar-bg: #0F172A;         /* Slate Midnight Sidebar */
   --sidebar-border: rgba(255, 255, 255, 0.08);
-  --sidebar-brand-name: #FAF7F2;
-  --sidebar-brand-tag: #E2886D;
-  --sidebar-text-muted: #9E8C94;
-  --sidebar-text: #D8CDD2;
+  --sidebar-brand-name: #F8FAFC;
+  --sidebar-brand-tag: #818CF8;
+  --sidebar-text-muted: #94A3B8;
+  --sidebar-text: #CBD5E1;
   --sidebar-hover: rgba(255, 255, 255, 0.08);
-  --sidebar-active-bg: linear-gradient(135deg, #C86D51, #A8543B);
+  --sidebar-active-bg: linear-gradient(135deg, #6366F1, #4F46E5);
   --sidebar-active-text: #FFFFFF;
-  --sidebar-footer-bg: #21121B;
-  --sidebar-user-avatar-bg: #C86D51;
-  --sidebar-user-name: #FAF7F2;
+  --sidebar-footer-bg: #0B0F19;
+  --sidebar-user-avatar-bg: #4F46E5;
+  --sidebar-user-name: #F8FAFC;
 
   --input-bg: #FFFFFF;
-  --input-border: #D8D2C9;
-  --hover-row: #FAF7F4;
+  --input-border: #CBD5E1;
+  --hover-row: #F1F5F9;
   
-  /* Academic Accents */
-  --terracotta: #C86D51;         /* Muted Terracotta */
-  --terracotta-hover: #B55C41;
-  --terracotta-light: #FDF2EE;
+  /* Modern Vibrant Accents */
+  --terracotta: #F43F5E;         /* Rose Red */
+  --terracotta-hover: #E11D48;
+  --terracotta-light: #FFF1F2;
   
-  --sage: #5E7A64;               /* Soft Sage Green */
-  --sage-light: #EFF4F0;
+  --sage: #10B981;               /* Emerald Green */
+  --sage-light: #ECFDF5;
   
-  --amber: #D9822B;              /* Soft Amber */
-  --amber-light: #FDF6ED;
+  --amber: #F59E0B;              /* Warm Amber */
+  --amber-light: #FEF3C7;
   
-  --plum-accent: #6C3D52;
+  --cyan: #06B6D4;               /* Electric Cyan */
+  --cyan-light: #CFFAFE;
+  
+  --plum-accent: #8B5CF6;        /* Violet Accent */
   
   /* Status Colors */
-  --status-success: #4E7C59;
-  --status-success-bg: #EDF4EE;
-  --status-warning: #C77C28;
-  --status-warning-bg: #FDF6ED;
-  --status-danger: #B84A39;
-  --status-danger-bg: #FDF2F0;
+  --status-success: #10B981;
+  --status-success-bg: #ECFDF5;
+  --status-warning: #F59E0B;
+  --status-warning-bg: #FEF3C7;
+  --status-danger: #EF4444;
+  --status-danger-bg: #FEF2F2;
 
   /* Elevation Shadows */
-  --shadow-sm: 0 1px 3px rgba(36, 30, 28, 0.04), 0 1px 2px rgba(36, 30, 28, 0.02);
-  --shadow-md: 0 4px 12px rgba(36, 30, 28, 0.06), 0 2px 4px rgba(36, 30, 28, 0.03);
-  --shadow-lg: 0 12px 24px rgba(36, 30, 28, 0.08), 0 4px 8px rgba(36, 30, 28, 0.04);
+  --shadow-sm: 0 1px 2px 0 rgba(15, 23, 42, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(15, 23, 42, 0.08), 0 2px 4px -2px rgba(15, 23, 42, 0.05);
+  --shadow-lg: 0 10px 15px -3px rgba(15, 23, 42, 0.1), 0 4px 6px -4px rgba(15, 23, 42, 0.05);
   
   /* Radii */
   --radius-sm: 6px;
@@ -76,51 +79,51 @@
 }
 
 [data-theme="dark"] {
-  --primary: #D9A0B7;
-  --primary-hover: #EBBED0;
-  --primary-light: #2D1D26;
-  --primary-subtle: #3D2633;
+  --primary: #818CF8;
+  --primary-hover: #A5B4FC;
+  --primary-light: #1E1B4B;
+  --primary-subtle: #312E81;
   
-  --bg: #141112;
-  --surface: #1E1A1C;
-  --surface-alt: #282326;
+  --bg: #090D16;
+  --surface: #111827;
+  --surface-alt: #1F2937;
   
-  --border: #383034;
-  --border-subtle: #2C2629;
+  --border: #374151;
+  --border-subtle: #1F2937;
   
-  --sidebar-bg: #1A1216;
-  --sidebar-border: #2E2228;
-  --sidebar-brand-name: #F5EFEB;
-  --sidebar-brand-tag: #E2886D;
-  --sidebar-text-muted: #8E7E85;
-  --sidebar-text: #C8BDC2;
+  --sidebar-bg: #0B0F19;
+  --sidebar-border: #1F2937;
+  --sidebar-brand-name: #F9FAFB;
+  --sidebar-brand-tag: #818CF8;
+  --sidebar-text-muted: #9CA3AF;
+  --sidebar-text: #E5E7EB;
   --sidebar-hover: rgba(255, 255, 255, 0.06);
-  --sidebar-active-bg: linear-gradient(135deg, #C86D51, #B55C41);
+  --sidebar-active-bg: linear-gradient(135deg, #6366F1, #4F46E5);
   --sidebar-active-text: #FFFFFF;
-  --sidebar-footer-bg: #150E12;
-  --sidebar-user-avatar-bg: #C86D51;
-  --sidebar-user-name: #F5EFEB;
+  --sidebar-footer-bg: #060910;
+  --sidebar-user-avatar-bg: #6366F1;
+  --sidebar-user-name: #F9FAFB;
 
-  --text-primary: #F5EFEB;
-  --text-secondary: #C4B9B5;
-  --text-muted: #8E827E;
+  --text-primary: #F9FAFB;
+  --text-secondary: #D1D5DB;
+  --text-muted: #9CA3AF;
   
-  --input-bg: #241F22;
-  --input-border: #443B40;
-  --hover-row: #262024;
+  --input-bg: #1F2937;
+  --input-border: #4B5563;
+  --hover-row: #1E293B;
   
-  --terracotta: #E2886D;
-  --terracotta-light: #3A231D;
+  --terracotta: #FB7185;
+  --terracotta-light: #31121F;
   
-  --sage: #81A388;
-  --sage-light: #1E2B21;
+  --sage: #34D399;
+  --sage-light: #064E3B;
   
-  --amber: #EBB06C;
-  --amber-light: #382A1B;
+  --amber: #FBBF24;
+  --amber-light: #451A03;
   
-  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
-  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
-  --shadow-lg: 0 12px 24px rgba(0, 0, 0, 0.5);
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.5);
+  --shadow-lg: 0 12px 24px rgba(0, 0, 0, 0.6);
 }
 
 body {
